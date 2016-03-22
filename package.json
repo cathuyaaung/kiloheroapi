@@ -1,0 +1,12 @@
+{
+  "name": "kiloheroapi",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*",
+    "mongoose": "*"
+  }
+}
