@@ -39,7 +39,7 @@ plan.remote(function(remote) {
 
   remote.log('Reload application');
   remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
-  remote.exec('restart app');
+  remote.exec('pm2 restart app');
 
   // remote.exec('sudo restart '+appName);
   // remote.exec('sudo start '+appName);
