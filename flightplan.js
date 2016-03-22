@@ -1,6 +1,6 @@
 var plan = require('flightplan');
 
-var appName = 'potionsellerapi';
+var appName = 'kiloheroapi';
 var username = 'hero';
 var startFile = 'app.js';
 
@@ -37,8 +37,10 @@ plan.remote(function(remote) {
   remote.log('Install dependencies');
   remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username});
 
-  // remote.log('Reload application');
-  // remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
+  remote.log('Reload application');
+  remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
+  remote.exec('restart app');
+
   // remote.exec('sudo restart '+appName);
   // remote.exec('sudo start '+appName);
   // remote.exec('forever stop ~/'+appName+'/'+startFile, {failsafe: true});

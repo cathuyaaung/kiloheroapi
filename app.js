@@ -25,5 +25,5 @@ app.use('/posts', postsRouter);
 app.use('/messages', messagesRouter);
 
 
-app.listen('8081');
-console.log('listening on 8081');
+app.listen('8080');
+console.log('listening on 8080');
