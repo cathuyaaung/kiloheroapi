@@ -8,6 +8,10 @@ var RouteSchema = mongoose.Schema({
   from: {
     type: String,
     required: true
+  },
+  sequence:{
+    type: Number,
+    required: true
   }
 });
 
@@ -16,7 +20,7 @@ mongoose.model('routes', RouteSchema)
 
 
 module.exports.getRoutes = function(callback, limit){
-  Route.find(callback).limit(limit);
+  Route.find(callback).limit(limit).sort('sequence');
 };
 
 module.exports.getRouteById = function(id, callback){
@@ -31,7 +35,8 @@ module.exports.updateRoute = function(id, route, options, callback){
   var query = {_id: id};
   var update = {
     to: route.to,
-    from: route.from
+    from: route.from,
+    sequence: route.sequence
   };
   Route.findOneAndUpdate(query, update, options, callback);
 };

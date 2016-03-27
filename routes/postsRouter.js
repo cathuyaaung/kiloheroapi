@@ -8,6 +8,27 @@ postsRouter.get('/', function(req,res){
     res.json(response);
   });
 });
+postsRouter.get('/wts/:route_id', function(req,res){
+  //console.log('/wts/' + req.params.route_id);
+  Post.getWTSPostsByRouteId(req.params.route_id, function(err, response){
+    if(err){res.json(err);}
+    res.json(response);
+  });
+});
+postsRouter.get('/wtb/:route_id', function(req,res){
+  //console.log('/wtb/' + req.params.route_id);
+  Post.getWTBPostsByRouteId(req.params.route_id, function(err, response){
+    if(err){res.json(err);}
+    res.json(response);
+  });
+});
+postsRouter.get('/totalKilo/:route_id', function(req,res){
+  //console.log('/wtb/' + req.params.route_id);
+  Post.getTotalKiloByRouteId(req.params.route_id, function(err, response){
+    if(err){res.json(err);}
+    res.json(response);
+  });
+});
 postsRouter.get('/:_id', function(req,res){
   Post.getPostById(req.params._id, function(err, response){
     if(err){res.json(err);}

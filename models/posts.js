@@ -24,6 +24,11 @@ var PostSchema = mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  postType:{
+    type: String,
+    enum: ['WTS', 'WTB'],
+    default: 'WTS'
   }
 });
 
@@ -33,6 +38,33 @@ mongoose.model('posts', PostSchema)
 
 module.exports.getPosts = function(callback, limit){
   Post.find(callback).limit(limit);
+};
+
+module.exports.getWTSPostsByRouteId = function(route_id, callback, limit){
+  Post.find({route: route_id, postType: 'WTS'}).limit(limit).exec(callback);
+};
+
+module.exports.getWTBPostsByRouteId = function(route_id, callback, limit){
+  Post.find({route: route_id, postType: 'WTB'}).limit(limit).exec(callback);
+};
+
+module.exports.getTotalKiloByRouteId = function(route_id, callback, limit){
+  Post.aggregate(
+    [
+      {
+        $match:{
+          route: mongoose.Types.ObjectId(route_id)
+        }
+      },
+      { 
+        $group: 
+        {
+            _id: '$postType', 
+            totalKilo: { $sum: '$kilo'}
+        }
+      }
+    ], callback
+  );
 };
 
 module.exports.getPostById = function(id, callback){
@@ -50,7 +82,8 @@ module.exports.updatePost = function(id, post, options, callback){
     poster: post.poster,
     kilo: post.kilo,
     price: post.price,
-    date: post.date
+    date: post.date,
+    postType: post.postType
   };
   Post.findOneAndUpdate(query, update, options, callback);
 };
