@@ -7,6 +7,10 @@ var UserSchema = mongoose.Schema({
   }
 });
 
+UserSchema.plugin(require('mongoose-autopopulate'));
+UserSchema.plugin(require('mongoose-timestamp'));
+
+
 var User = module.exports =
 mongoose.model('users', UserSchema)
 

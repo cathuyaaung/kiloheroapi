@@ -5,11 +5,13 @@ var MessageSchema = mongoose.Schema({
   post: {
     type : Schema.ObjectId,
     ref: 'posts',
+    autopopulate: true,
     required : true
   },
   poster: {
     type : Schema.ObjectId,
     ref: 'users',
+    autopopulate: true,
     required : true
   },
   message: {
@@ -21,6 +23,9 @@ var MessageSchema = mongoose.Schema({
     default: Date.now
   }
 });
+
+MessageSchema.plugin(require('mongoose-autopopulate'));
+MessageSchema.plugin(require('mongoose-timestamp'));
 
 var Message = module.exports =
 mongoose.model('messages', MessageSchema)

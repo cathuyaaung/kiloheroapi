@@ -13,7 +13,23 @@ var RouteSchema = mongoose.Schema({
     type: Number,
     required: true
   }
+}, {
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
 });
+
+RouteSchema
+.virtual('name')
+.get(function () {
+  return this.from + ' - ' + this.to;
+});
+
+RouteSchema.plugin(require('mongoose-autopopulate'));
+RouteSchema.plugin(require('mongoose-timestamp'));
 
 var Route = module.exports =
 mongoose.model('routes', RouteSchema)

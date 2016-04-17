@@ -5,11 +5,13 @@ var PostSchema = mongoose.Schema({
   route: {
     type : Schema.ObjectId,
     ref: 'routes',
-    required : true
+    autopopulate: true,
+    required : true,
   },
   poster: {
     type : Schema.ObjectId,
     ref: 'users',
+    autopopulate: true,
     required : true
   },
   kilo: {
@@ -30,7 +32,29 @@ var PostSchema = mongoose.Schema({
     enum: ['WTS', 'WTB'],
     default: 'WTS'
   }
+}, {
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
 });
+
+PostSchema
+.virtual('routeName')
+.get(function () {
+  return this.route.name;
+});
+
+PostSchema
+.virtual('posterName')
+.get(function () {
+  return this.poster.username;
+});
+
+PostSchema.plugin(require('mongoose-autopopulate'));
+PostSchema.plugin(require('mongoose-timestamp'));
 
 var Post = module.exports =
 mongoose.model('posts', PostSchema)

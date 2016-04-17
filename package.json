@@ -7,6 +7,13 @@
   "dependencies": {
     "express": "*",
     "body-parser": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "mongoose-autopopulate": "*",
+    "mongoose-timestamp": "*",
+    "jsonwebtoken": "*",
+    "passport" : "*",
+    "passport-facebook" : "*",
+    "cookie-parser": "*",
+    "method-override": "*"
   }
 }
