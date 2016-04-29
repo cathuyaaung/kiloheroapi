@@ -12,7 +12,8 @@ app.use(methodOverride('X-HTTP-Method-Override'))
 app.set('superSecret', 'how now brown cow');
 
 // Connect to mongoose
-mongoose.connect('mongodb://localhost/kiloherodb');
+//mongoose.connect('mongodb://localhost/kiloherodb');
+mongoose.connect('mongodb://kiloherodbsa:Ki10Her0DbsA@kiloheroapi.flansoft.com/kiloherodb');
 var db = mongoose.connection;
 
 /*app.get('/', function(req,res){
