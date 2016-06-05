@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var Route = require('../models/routes');
+
 var PostSchema = mongoose.Schema({
   route: {
     type : Schema.ObjectId,
@@ -56,8 +58,26 @@ PostSchema
 PostSchema.plugin(require('mongoose-autopopulate'));
 PostSchema.plugin(require('mongoose-timestamp'));
 
-var Post = module.exports =
-mongoose.model('posts', PostSchema)
+var Post = module.exports = mongoose.model('posts', PostSchema);
+
+PostSchema.post('save', function(doc) {
+  var route_id = this.route;
+  Post.getTotalKiloByRouteId(route_id,
+    function(err,response){
+      console.log(err,response);
+      console.log(route_id);
+      console.log(response[0].totalKilo);
+      console.log(response[1].totalKilo);
+      Route.update({_id : route_id},
+                   {wtb : response[0].totalKilo },{},
+                    function(err,response){
+                      console.log(err);
+                      console.log(response);  
+                    }
+                  );
+    }
+  );
+});
 
 
 module.exports.getPosts = function(callback, limit){
@@ -72,7 +92,7 @@ module.exports.getWTBPostsByRouteId = function(route_id, callback, limit){
   Post.find({route: route_id, postType: 'WTB'}).limit(limit).exec(callback);
 };
 
-module.exports.getTotalKiloByRouteId = function(route_id, callback, limit){
+module.exports.getTotalKiloByRouteId = function(route_id, callback, limit){  
   Post.aggregate(
     [
       {
